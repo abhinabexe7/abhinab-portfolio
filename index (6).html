@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhinab Basnet</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=Space+Mono&display=swap');
+
+:root {
+  --bg: #03030a;
+  --acc: #e8ff00;
+  --acc2: #ff2d6b;
+  --txt: #ececec;
+  --dim: #4a4a60;
+  --card: #08080f;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Outfit', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* UNIVERSE */
+.universe { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.stars-layer { position:absolute; inset:0; }
+.star { position:absolute; border-radius:50%; background:#fff; animation: twinkle linear infinite; }
+.nebula1 {
+  position:absolute; width:700px; height:700px; top:-100px; right:-150px; border-radius:50%;
+  background: radial-gradient(circle at 40% 40%, rgba(120,40,255,.35) 0%, rgba(60,0,180,.15) 40%, transparent 70%);
+  filter: blur(60px); animation: nebulaPulse 8s ease-in-out infinite;
+}
+.nebula2 {
+  position:absolute; width:600px; height:600px; bottom:-150px; left:-100px; border-radius:50%;
+  background: radial-gradient(circle at 60% 60%, rgba(0,180,255,.25) 0%, rgba(0,80,200,.1) 45%, transparent 70%);
+  filter: blur(70px); animation: nebulaShift 10s ease-in-out infinite;
+}
+.nebula3 {
+  position:absolute; width:400px; height:400px; top:40%; left:40%; border-radius:50%;
+  background: radial-gradient(circle, rgba(232,255,0,.07) 0%, transparent 70%);
+  filter: blur(50px); animation: nebulaPulse 12s ease-in-out infinite reverse;
+}
+.shooting-star {
+  position:absolute; width:2px; height:2px; background:white; border-radius:50%;
+  box-shadow: 0 0 4px 1px rgba(255,255,255,.8), 80px 0 30px rgba(255,255,255,.3), 160px 0 60px rgba(255,255,255,.1);
+  animation: shootingStar 3s linear infinite; opacity:0;
+}
+.shooting-star:nth-child(4){ top:15%; left:80%; animation-delay:1s; animation-duration:2.5s; }
+.shooting-star:nth-child(5){ top:35%; left:90%; animation-delay:4.5s; animation-duration:3s; }
+.shooting-star:nth-child(6){ top:60%; left:72%; animation-delay:8s; animation-duration:2.2s; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:1.4rem 2.5rem;
+  display:flex; justify-content:space-between; align-items:center;
+  background:rgba(3,3,10,0.85); border-bottom:1px solid rgba(255,255,255,.06);
+  backdrop-filter:blur(12px);
+}
+.logo { font-family:'Bebas Neue',Impact,sans-serif; font-size:1.8rem; letter-spacing:.08em; color:var(--txt); }
+.logo em { color:var(--acc); font-style:normal; }
+.nav-r { display:flex; gap:2rem; align-items:center; }
+.nav-r a { font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .2s; }
+.nav-r a:hover { color:var(--acc); }
+.nav-btn { padding:.55rem 1.4rem; background:var(--acc); color:#000; font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; font-weight:700; transition:transform .2s, box-shadow .2s; display:inline-block; }
+.nav-btn:hover { transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--acc2); }
+
+/* HERO */
+.hero {
+  min-height:100vh; display:grid; grid-template-columns:1fr 1fr;
+  align-items:center; padding:8rem 2.5rem 4rem;
+  position:relative; z-index:1; overflow:hidden;
+}
+.bg-text {
+  position:absolute; font-family:'Bebas Neue',Impact,sans-serif;
+  font-size:30vw; line-height:1; color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.025);
+  pointer-events:none; user-select:none;
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  white-space:nowrap; z-index:0;
+}
+.hero-left { position:relative; z-index:1; }
+.hero-eyebrow { font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:.25em; text-transform:uppercase; color:var(--acc); margin-bottom:2rem; display:flex; align-items:center; gap:.8rem; }
+.hero-eyebrow::before { content:''; display:inline-block; width:30px; height:1px; background:var(--acc); }
+.hero-name { font-family:'Bebas Neue',Impact,sans-serif; font-size:clamp(5rem,10vw,9rem); line-height:.92; letter-spacing:.02em; }
+.hero-name .ghost { display:block; -webkit-text-stroke:1.5px rgba(255,255,255,.25); color:transparent; }
+.hero-name .acc { display:block; color:var(--acc); }
+.hero-sub { margin-top:2.5rem; font-size:.95rem; line-height:1.9; color:var(--dim); max-width:380px; }
+.hero-btns { margin-top:3rem; display:flex; gap:1rem; flex-wrap:wrap; }
+.btn-y { padding:.85rem 2rem; background:var(--acc); color:#000; font-family:'Space Mono',monospace; font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:transform .2s, box-shadow .2s; display:inline-block; }
+.btn-y:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--acc2); }
+.btn-o { padding:.85rem 2rem; border:1px solid rgba(255,255,255,.15); color:var(--txt); font-family:'Space Mono',monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:border-color .2s, color .2s; display:inline-block; }
+.btn-o:hover { border-color:var(--acc); color:var(--acc); }
+.hero-right { position:relative; z-index:1; display:flex; flex-direction:column; align-items:flex-end; gap:1.5rem; }
+.stat-box { border:1px solid rgba(255,255,255,.08); padding:1.8rem 2.5rem; text-align:right; width:200px; position:relative; overflow:hidden; transition:border-color .3s; }
+.stat-box:hover { border-color:rgba(232,255,0,.4); }
+.stat-box::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--acc); transition:height .4s; }
+.stat-box:hover::before { height:100%; }
+.stat-num { font-family:'Bebas Neue',Impact,sans-serif; font-size:3.5rem; line-height:1; color:var(--acc); }
+.stat-label { font-family:'Space Mono',monospace; font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); margin-top:.3rem; }
+.status-pill { display:inline-flex; align-items:center; gap:.6rem; border:1px solid rgba(255,255,255,.08); padding:.5rem 1rem; font-size:.65rem; font-family:'Space Mono',monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+.dot { width:7px; height:7px; border-radius:50%; background:var(--acc); box-shadow:0 0 8px var(--acc); animation:blink 2s infinite; }
+
+/* MARQUEE */
+.mqw { overflow:hidden; border-top:1px solid rgba(255,255,255,.05); border-bottom:1px solid rgba(255,255,255,.05); padding:.9rem 0; background:rgba(5,5,9,.9); position:relative; z-index:1; }
+.mqi { display:inline-block; white-space:nowrap; animation:mq 25s linear infinite; font-family:'Bebas Neue',Impact,sans-serif; font-size:1.1rem; letter-spacing:.15em; color:var(--dim); }
+.mqs { display:inline-block; margin:0 2rem; }
+.mqd { color:var(--acc); margin:0 .5rem; }
+
+/* SECTIONS */
+.sec { padding:7rem 2.5rem; position:relative; z-index:1; }
+.sec-tag { font-family:'Space Mono',monospace; font-size:.6rem; letter-spacing:.25em; text-transform:uppercase; color:var(--acc); margin-bottom:1rem; display:flex; align-items:center; gap:.8rem; }
+.sec-tag::before { content:''; width:20px; height:1px; background:var(--acc); }
+.sec-title { font-family:'Bebas Neue',Impact,sans-serif; font-size:clamp(3rem,7vw,6rem); line-height:.95; letter-spacing:.02em; margin-bottom:4rem; }
+.sec-title .acc { color:var(--acc); }
+.sec-title .ghost2 { -webkit-text-stroke:1px rgba(255,255,255,.12); color:transparent; }
+
+/* SERVICES */
+.services { border-top:1px solid rgba(255,255,255,.05); }
+.sv-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:rgba(255,255,255,.04); }
+.sv { background:rgba(8,8,15,.9); padding:3rem 2.5rem; position:relative; overflow:hidden; transition:background .3s; backdrop-filter:blur(4px); }
+.sv:hover { background:rgba(13,13,26,.95); }
+.sv-num { font-family:'Bebas Neue',Impact,sans-serif; font-size:6rem; line-height:1; color:rgba(232,255,0,.04); position:absolute; top:.5rem; right:1.5rem; transition:color .3s; pointer-events:none; }
+.sv:hover .sv-num { color:rgba(232,255,0,.1); }
+.sv-icon { width:52px; height:52px; margin-bottom:2rem; border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; font-size:1.4rem; transition:border-color .3s, transform .3s; }
+.sv:hover .sv-icon { border-color:var(--acc); transform:rotate(8deg); }
+.sv-name { font-family:'Bebas Neue',Impact,sans-serif; font-size:2.5rem; letter-spacing:.03em; margin-bottom:1rem; }
+.sv-desc { font-size:.88rem; line-height:1.9; color:var(--dim); }
+.sv-tags { margin-top:2rem; display:flex; flex-wrap:wrap; gap:.5rem; }
+.sv-tag { padding:.3rem .8rem; border:1px solid rgba(255,255,255,.07); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); transition:all .2s; }
+.sv:hover .sv-tag { border-color:rgba(232,255,0,.25); color:rgba(232,255,0,.7); }
+.sv-line { position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--acc),var(--acc2)); transform:scaleX(0); transform-origin:left; transition:transform .5s ease; }
+.sv:hover .sv-line { transform:scaleX(1); }
+
+/* WORK */
+.work { border-top:1px solid rgba(255,255,255,.05); }
+.work-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:1.5rem; }
+.wc { background:rgba(8,8,15,.85); border:1px solid rgba(255,255,255,.06); position:relative; overflow:hidden; transition:border-color .3s, transform .3s; backdrop-filter:blur(4px); }
+.wc:hover { border-color:rgba(232,255,0,.3); transform:translateY(-4px); }
+.wc:nth-child(1) { grid-column:span 7; aspect-ratio:16/10; }
+.wc:nth-child(2) { grid-column:span 5; aspect-ratio:4/3; }
+.wc:nth-child(3) { grid-column:span 5; aspect-ratio:4/3; }
+.wc:nth-child(4) { grid-column:span 7; aspect-ratio:16/10; }
+.wc-ph { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; }
+.wc-icon-big { font-size:3rem; opacity:.08; transition:opacity .3s, transform .3s; }
+.wc:hover .wc-icon-big { opacity:.2; transform:scale(1.1); }
+.wc-cs { font-family:'Space Mono',monospace; font-size:.55rem; letter-spacing:.25em; text-transform:uppercase; color:rgba(255,255,255,.15); }
+.wc-info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; background:linear-gradient(to top,rgba(3,3,10,.97),transparent); transform:translateY(100%); transition:transform .3s ease; }
+.wc:hover .wc-info { transform:translateY(0); }
+.wc-title { font-family:'Bebas Neue',Impact,sans-serif; font-size:1.6rem; letter-spacing:.03em; }
+.wc-type { font-family:'Space Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--acc); margin-top:.3rem; }
+.wc-corner { position:absolute; top:0; right:0; width:35px; height:35px; border-left:1px solid transparent; border-bottom:1px solid transparent; transition:border-color .3s; }
+.wc:hover .wc-corner { border-color:var(--acc); }
+
+/* CONTACT */
+.contact { border-top:1px solid rgba(255,255,255,.05); }
+.contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.contact-big { font-family:'Bebas Neue',Impact,sans-serif; font-size:clamp(3rem,7vw,6rem); line-height:.95; margin-top:1.5rem; }
+.contact-big span { display:block; -webkit-text-stroke:1px rgba(255,255,255,.18); color:transparent; transition:color .3s,-webkit-text-stroke-color .3s; cursor:default; }
+.contact-big span:hover { color:var(--acc); -webkit-text-stroke-color:var(--acc); }
+.contact-email-link { display:inline-block; margin-top:2rem; font-family:'Space Mono',monospace; font-size:.78rem; letter-spacing:.1em; color:var(--dim); text-decoration:none; padding-bottom:.3rem; border-bottom:1px solid var(--dim); transition:color .2s, border-color .2s; }
+.contact-email-link:hover { color:var(--acc); border-color:var(--acc); }
+.socials-row { display:flex; gap:1.5rem; margin-top:2rem; flex-wrap:wrap; }
+.soc { font-family:'Space Mono',monospace; font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; }
+.soc::after { content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px; background:var(--acc); transform:scaleX(0); transition:transform .3s; }
+.soc:hover { color:var(--acc); }
+.soc:hover::after { transform:scaleX(1); }
+.contact-form { display:flex; flex-direction:column; gap:1rem; }
+.cf-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.cf-field { padding:1rem 1.2rem; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); color:var(--txt); font-family:'Outfit',Arial,sans-serif; font-size:.88rem; outline:none; transition:border-color .2s; resize:none; width:100%; }
+.cf-field::placeholder { color:var(--dim); }
+.cf-field:focus { border-color:var(--acc); }
+.cf-field.tall { min-height:130px; }
+.cf-submit { padding:1rem 2rem; background:var(--acc); color:#000; font-family:'Space Mono',monospace; font-size:.7rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; border:none; cursor:pointer; align-self:flex-start; transition:transform .2s, box-shadow .2s; }
+.cf-submit:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--acc2); }
+
+footer { border-top:1px solid rgba(255,255,255,.05); padding:1.5rem 2.5rem; display:flex; justify-content:space-between; align-items:center; font-family:'Space Mono',monospace; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); position:relative; z-index:1; }
+.foot-acc { color:var(--acc); }
+
+/* KEYFRAMES */
+@keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+@keyframes twinkle { 0%,100%{opacity:.15;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }
+@keyframes nebulaPulse { 0%,100%{opacity:.18;transform:scale(1)} 50%{opacity:.3;transform:scale(1.08)} }
+@keyframes nebulaShift { 0%,100%{opacity:.12;transform:scale(1)} 50%{opacity:.22;transform:scale(1.05)} }
+@keyframes shootingStar { 0%{transform:translateX(0) translateY(0);opacity:1} 100%{transform:translateX(-500px) translateY(250px);opacity:0} }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero { grid-template-columns:1fr; padding-top:7rem; gap:3rem; }
+  .hero-right { align-items:flex-start; flex-direction:row; flex-wrap:wrap; gap:1rem; }
+  .stat-box { width:auto; flex:1; min-width:130px; padding:1.2rem 1.5rem; }
+  .sv-grid { grid-template-columns:1fr; }
+  .work-grid { grid-template-columns:1fr 1fr; }
+  .wc:nth-child(n) { grid-column:span 1; aspect-ratio:4/3; }
+  .contact-inner { grid-template-columns:1fr; gap:3rem; }
+  nav { padding:1rem 1.5rem; }
+  .nav-r .hide-mob { display:none; }
+  .sec { padding:4rem 1.5rem; }
+  footer { flex-direction:column; gap:.8rem; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- UNIVERSE BG -->
+<div class="universe">
+  <div class="nebula1"></div>
+  <div class="nebula2"></div>
+  <div class="nebula3"></div>
+  <div class="stars-layer" id="stars"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">AB<em>.</em></div>
+  <div class="nav-r">
+    <a href="#services" class="hide-mob">Services</a>
+    <a href="#work" class="hide-mob">Work</a>
+    <a href="#contact" class="hide-mob">Contact</a>
+    <a href="mailto:abhinab.exe7@gmail.com" class="nav-btn">Hire Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bg-text">AB</div>
+  <div class="hero-left">
+    <p class="hero-eyebrow">Based in Nepal &nbsp;&#183;&nbsp; Open to Work</p>
+    <h1 class="hero-name">
+      <span class="ghost">ABHINAB</span>
+      <span class="acc">BASNET</span>
+    </h1>
+    <p class="hero-sub">I cut videos that grab attention and build websites that look premium. Two skills. One creative -- ready to work.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-y">Start a Project</a>
+      <a href="#work" class="btn-o">See My Work</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-box"><div class="stat-num">2+</div><div class="stat-label">Services Offered</div></div>
+    <div class="stat-box"><div class="stat-num">&#8734;</div><div class="stat-label">Creative Energy</div></div>
+    <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Committed</div></div>
+    <div class="status-pill"><div class="dot"></div>Available for Projects</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mqw"><div class="mqi">
+  <span class="mqs">Video Editing</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Web Design</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Color Grading</span><span class="mqd">&#10022;</span>
+  <span class="mqs">UI / UX</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Promo Reels</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Landing Pages</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Motion Graphics</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Brand Identity</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Video Editing</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Web Design</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Color Grading</span><span class="mqd">&#10022;</span>
+  <span class="mqs">UI / UX</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Promo Reels</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Landing Pages</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Motion Graphics</span><span class="mqd">&#10022;</span>
+  <span class="mqs">Brand Identity</span><span class="mqd">&#10022;</span>
+</div></div>
+
+<!-- SERVICES -->
+<section class="sec services" id="services">
+  <p class="sec-tag">01 -- What I Do</p>
+  <h2 class="sec-title">My <span class="acc">Services</span><br><span class="ghost2">FOR YOU</span></h2>
+  <div class="sv-grid">
+    <div class="sv">
+      <div class="sv-num">01</div>
+      <div class="sv-icon">&#9654;</div>
+      <h3 class="sv-name">Video Editing</h3>
+      <p class="sv-desc">Raw footage becomes something people cannot stop watching. YouTube content, brand promos, Insta reels -- edited with purpose, pacing, and style that hits different.</p>
+      <div class="sv-tags">
+        <span class="sv-tag">YouTube Videos</span>
+        <span class="sv-tag">Reels / Shorts</span>
+        <span class="sv-tag">Brand Promos</span>
+        <span class="sv-tag">Color Grading</span>
+        <span class="sv-tag">Motion Text</span>
+        <span class="sv-tag">Sound Design</span>
+      </div>
+      <div class="sv-line"></div>
+    </div>
+    <div class="sv">
+      <div class="sv-num">02</div>
+      <div class="sv-icon">&#9672;</div>
+      <h3 class="sv-name">Web Design</h3>
+      <p class="sv-desc">Websites that actually look good -- not template garbage. Portfolio sites, business pages, landing pages built to impress clients and convert visitors into customers.</p>
+      <div class="sv-tags">
+        <span class="sv-tag">Portfolio Sites</span>
+        <span class="sv-tag">Business Pages</span>
+        <span class="sv-tag">Landing Pages</span>
+        <span class="sv-tag">UI / UX</span>
+        <span class="sv-tag">Responsive Design</span>
+        <span class="sv-tag">Custom Layouts</span>
+      </div>
+      <div class="sv-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="sec work" id="work">
+  <p class="sec-tag">02 -- Portfolio</p>
+  <h2 class="sec-title">Selected <span class="acc">Work</span></h2>
+  <div class="work-grid">
+    <div class="wc">
+      <div class="wc-ph"><div class="wc-icon-big">&#9654;</div><span class="wc-cs">Projects loading soon</span></div>
+      <div class="wc-corner"></div>
+      <div class="wc-info"><div class="wc-title">Featured Edit</div><div class="wc-type">Video Editing &middot; 2025</div></div>
+    </div>
+    <div class="wc">
+      <div class="wc-ph"><div class="wc-icon-big">&#9672;</div><span class="wc-cs">Coming soon</span></div>
+      <div class="wc-corner"></div>
+      <div class="wc-info"><div class="wc-title">Brand Website</div><div class="wc-type">Web Design &middot; 2025</div></div>
+    </div>
+    <div class="wc">
+      <div class="wc-ph"><div class="wc-icon-big">&#9654;</div><span class="wc-cs">Coming soon</span></div>
+      <div class="wc-corner"></div>
+      <div class="wc-info"><div class="wc-title">Promo Reel</div><div class="wc-type">Video Editing &middot; 2025</div></div>
+    </div>
+    <div class="wc">
+      <div class="wc-ph"><div class="wc-icon-big">&#9672;</div><span class="wc-cs">Coming soon</span></div>
+      <div class="wc-corner"></div>
+      <div class="wc-info"><div class="wc-title">Portfolio Site</div><div class="wc-type">Web Design &middot; 2025</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p class="sec-tag">03 -- Contact</p>
+      <div class="contact-big">
+        <span>LET'S</span>
+        <span>BUILD</span>
+        <span>SOMETHING</span>
+      </div>
+      <a href="mailto:abhinab.exe7@gmail.com" class="contact-email-link">abhinab.exe7@gmail.com</a>
+      <div class="socials-row">
+        <a href="https://www.instagram.com/abhinab.web?igsh=ajBrOXhsZTUyeG5y" target="_blank" class="soc">Instagram</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-form">
+        <div class="cf-row">
+          <input class="cf-field" type="text" placeholder="Your Name">
+          <input class="cf-field" type="email" placeholder="Your Email">
+        </div>
+        <input class="cf-field" type="text" placeholder="Subject -- Video / Website / Both">
+        <textarea class="cf-field tall" placeholder="Tell me about your project..."></textarea>
+        <button class="cf-submit">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>2025 Abhinab Basnet</span>
+  <span class="foot-acc">Kathmandu, Nepal</span>
+  <span>Video &middot; Web</span>
+</footer>
+
+<script>
+// Generate stars
+const starsContainer = document.getElementById('stars');
+for(let i = 0; i < 200; i++){
+  const star = document.createElement('div');
+  star.classList.add('star');
+  const size = Math.random() * 2.5 + 0.4;
+  star.style.cssText = [
+    'width:' + size + 'px',
+    'height:' + size + 'px',
+    'left:' + (Math.random()*100) + '%',
+    'top:' + (Math.random()*100) + '%',
+    'opacity:' + (Math.random()*0.5+0.1),
+    'animation-duration:' + (Math.random()*4+2) + 's',
+    'animation-delay:' + (Math.random()*6) + 's',
+    'box-shadow:0 0 ' + (size*2) + 'px rgba(255,255,255,.4)'
+  ].join(';');
+  starsContainer.appendChild(star);
+}
+</script>
+</body>
+</html>
